@@ -9,7 +9,7 @@ function ids(state = [], action) {
   if (!action.payload) {
     return state;
   }
-  const { id, data } = action.payload;
+  const { id } = action.payload;
 
   switch (action.type) {
     case UPDATE_QUOTE:
