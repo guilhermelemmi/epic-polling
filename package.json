@@ -15,6 +15,7 @@
     "storybook": "start-storybook -p 6006 -c .storybook"
   },
   "dependencies": {
+    "ajax": "^0.0.4",
     "antd": "^3.2.3",
     "axios": "^0.18.0",
     "prop-types": "^15.6.0",
@@ -23,7 +24,10 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-observable": "^0.18.0",
+    "redux-thunk": "^2.2.0",
+    "rx-dom-ajax": "^7.0.3",
+    "rxjs": "^5.5.7"
   },
   "devDependencies": {
     "@storybook/react": "^3.3.15",

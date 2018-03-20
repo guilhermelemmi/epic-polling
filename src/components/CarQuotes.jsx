@@ -50,10 +50,15 @@ CarQuotes.propTypes = {
   createQuote: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  quote: state.carQuotes &&
-    state.carQuotes.content[state.carQuotes.ids[state.carQuotes.ids.length - 1]],
-});
+const mapStateToProps = (state) => {
+  let quote = {};
+  if (state.carQuotes && state.carQuotes.ids.length) {
+    quote = state.carQuotes.content[state.carQuotes.ids[state.carQuotes.ids.length - 1]];
+  }
+  return {
+    quote,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   createQuote: quote => dispatch(postCarQuote(quote)),
