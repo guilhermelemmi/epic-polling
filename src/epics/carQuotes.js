@@ -29,15 +29,15 @@ export const carFetchEpic = action$ =>
               }
               return null;
             })
-            .catch(error => Observable.of(carFetchFailed(error)))));
+            .catch(error => Observable.of(carFetchFailed(error, action.payload.id)))));
 
 export const carFetchFailEpic = action$ =>
   action$.ofType(CAR_FETCH_FAILED)
-    .mapTo(carFetchStop());
+    .switchMap(action => carFetchStop('failed', action.payload.id));
 
 export const carFetchSucessfulEpic = action$ =>
   action$.ofType(CAR_FETCH_SUCESSFUL)
-    .mapTo(carFetchStop());
+    .switchMap(action => carFetchStop('quoted', action.response.id));
 
 export const carPostQuote = action$ =>
   action$.ofType(POST_QUOTE)
@@ -48,7 +48,7 @@ export const carPostQuote = action$ =>
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       })
-        .map(res => carFetchStart(res.response.id))
+        .map(res => carFetchStart(res.response.id, action.payload.quote))
         .catch(error => console.log('Error: ', error)));
 
 export default carFetchEpic;

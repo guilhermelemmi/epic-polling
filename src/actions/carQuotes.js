@@ -28,30 +28,35 @@ export function updateQuote(quote) {
 //   }, 1000);
 // }
 
-export function carFetchStart(id) {
+export function carFetchStart(id, body) {
   return {
     type: CAR_FETCH_START,
     payload: {
-      polling: true,
+      id,
+      body: {
+        ...body,
+        status: 'in_progress',
+      },
+    },
+  };
+}
+
+export function carFetchStop(status, id) {
+  return {
+    type: CAR_FETCH_STOP,
+    payload: {
+      status,
       id,
     },
   };
 }
 
-export function carFetchStop() {
-  return {
-    type: CAR_FETCH_STOP,
-    payload: {
-      polling: false,
-    },
-  };
-}
-
-export function carFetchFailed(error) {
+export function carFetchFailed(error, id) {
   return {
     type: CAR_FETCH_FAILED,
     payload: {
       error,
+      id,
     },
   };
 }

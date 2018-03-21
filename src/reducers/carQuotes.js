@@ -1,4 +1,9 @@
-import { UPDATE_QUOTE } from '../actions/carQuotes';
+import {
+  UPDATE_QUOTE,
+  CAR_FETCH_SUCESSFUL,
+  CAR_FETCH_START,
+  CAR_FETCH_STOP,
+} from '../actions/carQuotes';
 
 export const INITIAL_STATE_QUOTES = {
   ids: [],
@@ -41,6 +46,30 @@ export default function carQuotes(state = INITIAL_STATE_QUOTES, action) {
       return {
         ids: ids(state.ids, action),
         content: content(state.content, action),
+      };
+    case CAR_FETCH_SUCESSFUL:
+      return {
+        ids: [...state.ids],
+        content: {
+          ...state.content,
+          [action.payload.response.id]: action.payload.response,
+        },
+      };
+    case CAR_FETCH_START:
+      return {
+        ids: [...state.ids, action.payload.id],
+        content: {
+          ...state.content,
+          [action.payload.id]: action.payload.body,
+        },
+      };
+    case CAR_FETCH_STOP:
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...state.content[action.payload.id],
+          status: action.payload.status,
+        },
       };
     default:
       return state;
