@@ -9,72 +9,69 @@ import {
 } from 'antd';
 import { DEFAULT_ENTITY_SHAPE } from '../constants';
 
-class CarQuotes extends Component {
+class HotelQuotes extends Component {
   static propTypes = {
-    arrivalAirportId: PropTypes.number.isRequired,
-    carQuotes: PropTypes.shape(DEFAULT_ENTITY_SHAPE).isRequired,
-    cars: PropTypes.shape(DEFAULT_ENTITY_SHAPE).isRequired,
     fromDate: PropTypes.string.isRequired,
+    hotelQuotes: PropTypes.shape(DEFAULT_ENTITY_SHAPE).isRequired,
+    hotels: PropTypes.shape(DEFAULT_ENTITY_SHAPE).isRequired,
     isDisabled: PropTypes.bool.isRequired,
     onQuote: PropTypes.func.isRequired,
-    onSelectCarQuote: PropTypes.func.isRequired,
+    onSelectHotelQuote: PropTypes.func.isRequired,
     onDisable: PropTypes.func.isRequired,
     toDate: PropTypes.string.isRequired,
-    selectedCarQuote: PropTypes.shape({
+    selectedHotelQuote: PropTypes.shape({
       id: PropTypes.number.isRequired,
     }),
   };
 
   static defaultProps = {
-    selectedCarQuote: undefined,
+    selectedHotelQuote: undefined,
   };
 
   componentDidMount() {
     const {
-      arrivalAirportId,
-      cars,
       fromDate,
+      hotels,
       onQuote,
       toDate,
     } = this.props;
 
-    cars.ids.forEach((carId) => {
+    hotels.ids.forEach((hotelId) => {
       onQuote({
-        carId,
+        hotelId,
         userId: 1,
-        airportId: arrivalAirportId,
         from: fromDate,
         to: toDate,
       });
     });
   }
 
-  renderCarQuotes() {
+  renderHotelQuotes() {
     const {
-      carQuotes,
-      cars,
-      onSelectCarQuote,
-      selectedCarQuote,
+      hotelQuotes,
+      hotels,
+      onSelectHotelQuote,
+      selectedHotelQuote,
     } = this.props;
 
-    const selectedId = selectedCarQuote ? selectedCarQuote.id : undefined;
-    return carQuotes.ids.map((carQuoteId) => {
-      const quote = carQuotes.content[carQuoteId];
-      const car = cars.content[quote.carId];
+    const selectedId = selectedHotelQuote ? selectedHotelQuote.id : undefined;
+    return hotelQuotes.ids.map((hotelQuoteId) => {
+      const quote = hotelQuotes.content[hotelQuoteId];
+      const hotel = hotels.content[quote.hotelId];
       const cardStyle = { width: 150, cursor: 'pointer' };
-      if (carQuoteId === selectedId) {
+      if (hotelQuoteId === selectedId) {
         cardStyle.border = '3px solid red';
       }
-      return car ? (
+      return hotel ? (
         <Col
-          key={`car-quote-${carQuoteId}`}
+          key={`hotel-quote-${hotelQuoteId}`}
           lg={{ span: 6, offset: 2 }}
         >
           <Card
             style={cardStyle}
-            onClick={() => onSelectCarQuote(quote)}
+            onClick={() => onSelectHotelQuote(quote)}
           >
-            <h4>{car.model}</h4>
+            <h4>{hotel.name}</h4>
             {quote.amount ? `US$ ${quote.amount}` : 'Quoting...'}
           </Card>
         </Col>
@@ -88,7 +85,7 @@ class CarQuotes extends Component {
       onDisable,
     } = this.props;
 
-    const carQuotes = this.renderCarQuotes();
+    const hotelQuotes = this.renderHotelQuotes();
     return (
       <Row>
         <Col span={12} offset={6}>
@@ -98,12 +95,12 @@ class CarQuotes extends Component {
             defaultChecked
             onChange={onDisable}
           />
-          <h3 style={{ display: 'inline', marginLeft: 20 }}>Rent a car</h3>
+          <h3 style={{ display: 'inline', marginLeft: 20 }}>Book hotel</h3>
           <div style={{
             marginTop: 20,
             display: this.props.isDisabled ? 'none' : 'block',
           }}>
-            <Row>{carQuotes}</Row>
+            <Row>{hotelQuotes}</Row>
           </div>
         </Col>
       </Row>
@@ -111,4 +108,4 @@ class CarQuotes extends Component {
   }
 }
 
-export default CarQuotes;
+export default HotelQuotes;

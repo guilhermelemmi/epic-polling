@@ -1,12 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import CarQuotes from './components/CarQuotes';
+import BookingUI from './components/BookingUI';
 
 import store from './store';
 
 const App = () => (
   <Provider store={store}>
-    <CarQuotes />
+    <BookingUI />
   </Provider>
 );
 
