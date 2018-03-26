@@ -23,21 +23,17 @@ export const carFetchEpic = action$ =>
             url: `http://localhost:3000/car-quotes/${action.payload.id}`,
             method: 'GET',
           })
-            .map((res) => {
-              if (res.response.status === 'quoted') {
-                return carFetchSucessful(res.response);
-              }
-              return null;
-            })
+            .filter(res => res.response.status === 'quoted')
+            .map(res => carFetchSucessful(res.response))
             .catch(error => Observable.of(carFetchFailed(error, action.payload.id)))));
 
 export const carFetchFailEpic = action$ =>
   action$.ofType(CAR_FETCH_FAILED)
-    .switchMap(action => carFetchStop('failed', action.payload.id));
+    .map(action => carFetchStop('failed', action.payload.id));
 
 export const carFetchSucessfulEpic = action$ =>
   action$.ofType(CAR_FETCH_SUCESSFUL)
-    .switchMap(action => carFetchStop('quoted', action.response.id));
+    .map(action => carFetchStop('quoted', action.payload.response.id));
 
 export const carPostQuote = action$ =>
   action$.ofType(POST_QUOTE)
