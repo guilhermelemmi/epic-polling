@@ -51,8 +51,8 @@ CarQuotes.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  quote: state.carQuotes &&
-    state.carQuotes.content[state.carQuotes.ids[state.carQuotes.ids.length - 1]],
+  quote: state.carQuotes.ids.length ?
+    state.carQuotes.content[state.carQuotes.ids[state.carQuotes.ids.length - 1]] : {},
 });
 
 const mapDispatchToProps = dispatch => ({
