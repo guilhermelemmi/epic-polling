@@ -1,5 +1,6 @@
 import { UPDATE_HOTEL_QUOTE } from '../actions/hotelQuotes';
 import { CLEAR_FLIGHT_QUOTE } from '../actions/flightQuote';
+import { CLEAR_ORDER } from '../actions/orders';
 import sortQuotesByPrice from './utils';
 
 export const INITIAL_STATE_QUOTES = {
@@ -47,6 +48,7 @@ export default function hotelQuotes(state = INITIAL_STATE_QUOTES, action) {
       };
     }
     case CLEAR_FLIGHT_QUOTE:
+    case CLEAR_ORDER:
       return INITIAL_STATE_QUOTES;
     default:
       return state;

@@ -83,6 +83,10 @@ class Totals extends Component {
       value: total ? `US$ ${total}` : 'Quoting...',
     });
 
+    const isOrderEnabled = flightQuote && flightQuote.amount &&
+      (isCarDisabled || (carQuote && carQuote.amount)) &&
+      (isHotelDisabled || (hotelQuote && hotelQuote.amount));
+
     return (
       <Row>
         <Col span={12} offset={6}>
@@ -93,7 +97,13 @@ class Totals extends Component {
             pagination={false}
           />
           <div style={{ marginTop: 20, marginBottom: 20, textAlign: 'right' }}>
-            <Button type="primary" onClick={onOrder}>Confirm Order</Button>
+            <Button
+              type="primary"
+              onClick={onOrder}
+              disabled={!isOrderEnabled}
+            >
+              Confirm Order
+            </Button>
           </div>
         </Col>
       </Row>

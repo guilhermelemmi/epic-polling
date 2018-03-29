@@ -5,6 +5,7 @@ import hotelQuotes from './hotelQuotes';
 import cars from './cars';
 import hotels from './hotels';
 import airports from './airports';
+import orders from './orders';
 
 export default combineReducers({
   flightQuote,
@@ -13,4 +14,5 @@ export default combineReducers({
   cars,
   hotels,
   airports,
+  orders,
 });

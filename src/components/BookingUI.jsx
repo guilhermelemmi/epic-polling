@@ -7,7 +7,7 @@ import { fetchAirports } from '../actions/airports';
 import { postFlightQuote } from '../actions/flightQuote';
 import { postCarQuote } from '../actions/carQuotes';
 import { postHotelQuote } from '../actions/hotelQuotes';
-import { confirmOrder } from '../actions/orders';
+import { confirmOrder, resetOrder } from '../actions/orders';
 import {
   DEFAULT_ENTITY,
   DEFAULT_ENTITY_SHAPE,
@@ -18,6 +18,7 @@ import FlightQuote from './FlightQuote';
 import CarQuotes from './CarQuotes';
 import HotelQuotes from './HotelQuotes';
 import Totals from './Totals';
+import OrderConfirmation from './OrderConfirmation';
 
 class BookingUI extends Component {
   static propTypes = {
@@ -35,11 +36,17 @@ class BookingUI extends Component {
       to: PropTypes.string,
       id: PropTypes.number,
     }).isRequired,
+    order: PropTypes.shape({
+      id: PropTypes.number,
+      status: PropTypes.string,
+    }).isRequired,
     hotelQuotes: PropTypes.shape(DEFAULT_ENTITY_SHAPE).isRequired,
     hotels: PropTypes.shape(DEFAULT_ENTITY_SHAPE).isRequired,
     quoteCar: PropTypes.func.isRequired,
     quoteFlight: PropTypes.func.isRequired,
     quoteHotel: PropTypes.func.isRequired,
+    createOrder: PropTypes.func.isRequired,
+    clearOrder: PropTypes.func.isRequired,
   };
 
   state = {
@@ -121,11 +128,25 @@ class BookingUI extends Component {
       selectedCarQuote,
       selectedHotelQuote,
     } = this.state;
-    confirmOrder({
+    this.props.createOrder({
       userId: 1,
       flightQuoteId: this.props.flightQuote.id,
       carQuoteId: selectedCarQuote ? selectedCarQuote.id : null,
       hotelQuoteId: selectedHotelQuote ? selectedHotelQuote.id : null,
+    });
+  }
+
+  handleClearOrder = () => {
+    this.props.clearOrder();
+    this.setState({
+      arrivalAirport: {},
+      departureAirport: {},
+      fromDate: '',
+      isCarDisabled: false,
+      isHotelDisabled: false,
+      selectedCarQuote: undefined,
+      selectedHotelQuote: undefined,
+      toDate: '',
     });
   }
 
@@ -140,6 +161,7 @@ class BookingUI extends Component {
       quoteCar,
       quoteFlight,
       quoteHotel,
+      order,
     } = this.props;
 
     const {
@@ -201,6 +223,7 @@ class BookingUI extends Component {
               isHotelDisabled={isHotelDisabled}
               onOrder={this.handleConfirmOrder}
             />
+            <OrderConfirmation order={order} onClose={this.handleClearOrder} />
           </div>
         )}
       </div>
@@ -215,10 +238,12 @@ const mapStateToProps = state => ({
   flightQuote: state.flightQuote,
   hotelQuotes: state.hotelQuotes || DEFAULT_ENTITY,
   hotels: state.hotels || DEFAULT_ENTITY,
+  order: state.orders,
 });
 
 const mapDispatchToProps = dispatch => ({
-  confirmOrder: order => dispatch(confirmOrder(order)),
+  createOrder: order => dispatch(confirmOrder(order)),
+  clearOrder: () => dispatch(resetOrder()),
   fetchAirports: () => dispatch(fetchAirports()),
   fetchCars: () => dispatch(fetchCars()),
   fetchHotels: () => dispatch(fetchHotels()),

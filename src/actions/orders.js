@@ -2,12 +2,16 @@ import axios from 'axios';
 import { API_URL, ORDER_STATUS } from '../constants';
 
 export const UPDATE_ORDER = 'UPDATE_ORDER';
+export const CLEAR_ORDER = 'CLEAR_ORDER';
+
+export function resetOrder() {
+  return { type: CLEAR_ORDER };
+}
 
 export function updateOrder(order) {
   return {
     type: UPDATE_ORDER,
     payload: {
-      id: order.id,
       data: order,
     },
   };
