@@ -13,16 +13,18 @@ export function updateQuote(quote) {
 }
 
 function watchQuote(dispatch, id) {
-  const quoteWatcher = setInterval(() => {
+  const quoteWatcher = () => {
     axios.get(`http://localhost:3000/car-quotes/${id}`)
       .then((response) => {
         if (response.data.status === 'quoted') {
-          clearInterval(quoteWatcher);
           dispatch(updateQuote(response.data));
+        } else {
+          setTimeout(quoteWatcher, 1000);
         }
       })
       .catch(error => console.log(error)); // eslint-disable-line no-console
-  }, 1000);
+  };
+  quoteWatcher();
 }
 
 export function postCarQuote(quote) {
