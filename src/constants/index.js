@@ -28,6 +28,15 @@ export const DEFAULT_ENTITY_SHAPE = {
   content: PropTypes.object,
 };
 
+export const DEFAULT_FLIGHT_QUOTE_SHAPE = {
+  userId: PropTypes.number,
+  arrivalAirportIcao: PropTypes.string,
+  departureAirportIcao: PropTypes.string,
+  from: PropTypes.string,
+  to: PropTypes.string,
+  id: PropTypes.number,
+};
+
 export const AIRPORT_SHAPE = {
   id: PropTypes.number,
   icao: PropTypes.string,
@@ -37,4 +46,9 @@ export const AIRPORT_SHAPE = {
 export const DEFAULT_QUOTE_SHAPE = {
   id: PropTypes.number.isRequired,
   amount: PropTypes.number,
+};
+
+export const DEFAULT_ORDER_SHAPE = {
+  id: PropTypes.number.isRequired,
+  status: PropTypes.string,
 };

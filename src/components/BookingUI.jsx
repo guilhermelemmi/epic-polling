@@ -11,6 +11,8 @@ import { confirmOrder, resetOrder } from '../actions/orders';
 import {
   DEFAULT_ENTITY,
   DEFAULT_ENTITY_SHAPE,
+  DEFAULT_FLIGHT_QUOTE_SHAPE,
+  DEFAULT_ORDER_SHAPE,
   INITIAL_APP_STATE,
   QUOTE_STATUS,
 } from '../constants';
@@ -29,18 +31,8 @@ class BookingUI extends Component {
     fetchAirports: PropTypes.func.isRequired,
     fetchCars: PropTypes.func.isRequired,
     fetchHotels: PropTypes.func.isRequired,
-    flightQuote: PropTypes.shape({
-      userId: PropTypes.number,
-      arrivalAirportIcao: PropTypes.string,
-      departureAirportIcao: PropTypes.string,
-      from: PropTypes.string,
-      to: PropTypes.string,
-      id: PropTypes.number,
-    }).isRequired,
-    order: PropTypes.shape({
-      id: PropTypes.number,
-      status: PropTypes.string,
-    }).isRequired,
+    flightQuote: PropTypes.shape(DEFAULT_FLIGHT_QUOTE_SHAPE).isRequired,
+    order: PropTypes.shape(DEFAULT_ORDER_SHAPE).isRequired,
     hotelQuotes: PropTypes.shape(DEFAULT_ENTITY_SHAPE).isRequired,
     hotels: PropTypes.shape(DEFAULT_ENTITY_SHAPE).isRequired,
     quoteCar: PropTypes.func.isRequired,
@@ -177,8 +169,8 @@ class BookingUI extends Component {
           <div>
             <CarQuotes
               arrivalAirportId={arrivalAirport.id}
-              carQuotes={carQuotes}
               cars={cars}
+              carQuotes={carQuotes}
               fromDate={fromDate}
               isDisabled={isCarDisabled}
               onDisable={this.handleDisableCar}
