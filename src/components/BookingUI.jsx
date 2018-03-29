@@ -11,6 +11,7 @@ import { confirmOrder, resetOrder } from '../actions/orders';
 import {
   DEFAULT_ENTITY,
   DEFAULT_ENTITY_SHAPE,
+  INITIAL_APP_STATE,
   QUOTE_STATUS,
 } from '../constants';
 
@@ -49,16 +50,7 @@ class BookingUI extends Component {
     clearOrder: PropTypes.func.isRequired,
   };
 
-  state = {
-    arrivalAirport: {},
-    departureAirport: {},
-    fromDate: '',
-    isCarDisabled: false,
-    isHotelDisabled: false,
-    selectedCarQuote: undefined,
-    selectedHotelQuote: undefined,
-    toDate: '',
-  };
+  state = INITIAL_APP_STATE;
 
   componentDidMount() {
     this.props.fetchAirports();
@@ -138,16 +130,7 @@ class BookingUI extends Component {
 
   handleClearOrder = () => {
     this.props.clearOrder();
-    this.setState({
-      arrivalAirport: {},
-      departureAirport: {},
-      fromDate: '',
-      isCarDisabled: false,
-      isHotelDisabled: false,
-      selectedCarQuote: undefined,
-      selectedHotelQuote: undefined,
-      toDate: '',
-    });
+    this.setState(INITIAL_APP_STATE);
   }
 
   render() {

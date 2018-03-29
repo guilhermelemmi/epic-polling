@@ -2,6 +2,17 @@ import PropTypes from 'prop-types';
 
 export const API_URL = 'http://localhost:3000';
 
+export const INITIAL_APP_STATE = {
+  arrivalAirport: {},
+  departureAirport: {},
+  fromDate: '',
+  isCarDisabled: false,
+  isHotelDisabled: false,
+  selectedCarQuote: undefined,
+  selectedHotelQuote: undefined,
+  toDate: '',
+};
+
 export const QUOTE_STATUS = {
   QUOTED: 'quoted',
 };
